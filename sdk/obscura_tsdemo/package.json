@@ -1,0 +1,50 @@
+{
+  "name": "obscura-tsdemo",
+  "version": "0.1.0",
+  "description": "Demo project showcasing obscura-ts SDK usage",
+  "private": true,
+  "main": "dist/verify.js",
+  "bin": {
+    "obscura-demo": "dist/verify.js"
+  },
+  "scripts": {
+    "prebuild": "node scripts/check.js",
+    "build": "tsc",
+    "build:arm64": "OBSCURA_ARCH=arm64 npm run build",
+    "build:aarch64": "OBSCURA_ARCH=arm64 npm run build",
+    "build:x64": "OBSCURA_ARCH=x86_64 npm run build",
+    "build:x86_64": "OBSCURA_ARCH=x86_64 npm run build",
+    "clean": "rm -rf dist/",
+    "demo:basic": "node dist/basic.js",
+    "demo:scrape": "node dist/scrape.js",
+    "demo:stealth": "node dist/stealth.js",
+    "demo:forms": "node dist/forms.js",
+    "demo:verify": "node dist/verify.js",
+    "demo:useragent": "node dist/test-useragent.js",
+    "demo:all": "npm run demo:basic && npm run demo:scrape && npm run demo:stealth",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "obscura",
+    "demo",
+    "playwright",
+    "web-scraping"
+  ],
+  "author": "Obscura Team",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "obscura-ts": "file:../obscura_ts",
+    "playwright-core": "^1.60.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "name": "obscura-ts",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for Obscura headless browser - Playwright-based automation with anti-detection",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "src/",
+    "bin/",
+    "examples-dist/",
+    "scripts/",
+    "README.md"
+  ],
+  "scripts": {
+    "prebuild": "node scripts/check.js",
+    "build": "tsc",
+    "build:arm64": "OBSCURA_ARCH=arm64 npm run build",
+    "build:aarch64": "OBSCURA_ARCH=arm64 npm run build",
+    "build:x64": "OBSCURA_ARCH=x86_64 npm run build",
+    "build:x86_64": "OBSCURA_ARCH=x86_64 npm run build",
+    "build:examples": "tsc -p tsconfig.examples.json",
+    "clean": "rm -rf dist/ examples-dist/",
+    "prepare:playwright": "./prepare_playwright.sh",
+    "prepare:bin": "node scripts/prepare-bin.js",
+    "prepublishOnly": "npm run build && npm run prepare:bin",
+    "demo:basic": "node -e \"require('obscura-ts')\" && node examples/basic.js",
+    "demo:baidu": "node examples/baidu_simple_test.js",
+    "verify": "npm run build:examples && npm run demo:basic"
+  },
+  "keywords": [
+    "obscura",
+    "headless-browser",
+    "playwright",
+    "web-scraping",
+    "automation",
+    "cdp",
+    "anti-detection",
+    "stealth"
+  ],
+  "author": "Obscura Team",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h4ckf0r0day/obscura.git",
+    "directory": "sdk/obscura_ts"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "playwright-core": "^1.60.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

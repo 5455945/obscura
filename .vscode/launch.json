@@ -1,0 +1,98 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Local Debug (WSL)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/${input:targetDir}/aarch64-unknown-linux-gnu/debug/obscura",
+      "args": [
+        "fetch",
+        "https://www.baidu.com",
+        "--dump",
+        "text"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "RUST_LOG",
+          "value": "debug"
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "sourceFileMap": {
+        "./../../../../../third_party/v8-137.3.0/src": "/home/zhangfengjiang.zfj/workspace/git/obscura/third_party/v8-137.3.0/src"
+      },
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": ""
+    },
+    {
+      "name": "Remote GDB (Car Device)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/${input:targetDir}/aarch64-unknown-linux-gnu/debug/obscura",
+      "args": [],
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb-multiarch",
+      "miDebuggerServerAddress": "localhost:12345",
+      "sourceFileMap": {
+        "./../../../../../third_party/v8-137.3.0/src": "/home/zhangfengjiang.zfj/workspace/git/obscura/third_party/v8-137.3.0/src"
+      },
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Set sysroot for ARM64",
+          "text": "set sysroot /home/zhangfengjiang.zfj/workspace/git/obscura/third_party/v8-137.3.0/build/linux/debian_bullseye_arm64-sysroot",
+          "ignoreFailures": false
+        },
+        {
+          "description": "Set solib search path",
+          "text": "set solib-search-path ./",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "prepare-car-debug",
+      "postDebugTask": "cleanup-car-debug"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "targetDir",
+      "type": "pickString",
+      "description": "目标编译目录",
+      "options": [
+        "target/aarch64",
+        "target/dbg",
+        "target/bmain02"
+      ],
+      "default": "target/aarch64"
+    },
+    {
+      "id": "pushMode",
+      "type": "pickString",
+      "description": "是否推送二进制到车机",
+      "options": [
+        "push",
+        "no-push"
+      ],
+      "default": "push"
+    }
+  ]
+}

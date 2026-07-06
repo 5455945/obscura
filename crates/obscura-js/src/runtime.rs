@@ -13,6 +13,8 @@ use crate::module_loader::ObscuraModuleLoader;
 use crate::ops::{build_extension, ObscuraState};
 
 static SNAPSHOT: &[u8] = include_bytes!(env!("OBSCURA_SNAPSHOT_PATH"));
+#[cfg(feature = "domono")]
+static BOOTSTRAP_JS: &str = include_str!("../js/bootstrap.js");
 
 #[derive(Debug, Clone)]
 pub struct RemoteObjectInfo {
@@ -121,11 +123,35 @@ impl ObscuraJsRuntime {
         let mut runtime = JsRuntime::new(RuntimeOptions {
             extensions: vec![build_extension()],
             module_loader: Some(module_loader),
-            startup_snapshot: Some(SNAPSHOT),
+            // domono mod begin
+            //startup_snapshot: Some(SNAPSHOT),
+            startup_snapshot: if cfg!(feature = "domono") && cfg!(target_arch = "aarch64") && cfg!(target_os = "linux") {
+                // The ARM64 cross-compiled snapshot crashes during deserialization
+                // Disable it and load bootstrap.js below.
+                None
+            } else {
+                Some(SNAPSHOT)
+            },
+            // domono mod end
             ..Default::default()
         });
 
         runtime.op_state().borrow_mut().put(state_clone);
+
+        // When the `domono` feature is enabled: on ARM64 Linux the snapshot
+        // is disabled to avoid deserialization crashes, so load bootstrap.js
+        // explicitly to set up DOM bindings (document.title, _domParse, etc.)
+        #[cfg(feature = "domono")]
+        {
+            if cfg!(target_arch = "aarch64") && cfg!(target_os = "linux") {
+                runtime
+                    .execute_script(
+                        "<obscura:bootstrap>",
+                        BOOTSTRAP_JS.to_string(),
+                    )
+                    .expect("bootstrap.js should execute successfully");
+            }
+        }
 
         runtime
             .execute_script(

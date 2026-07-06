@@ -1,0 +1,63 @@
+{
+  // =============================================
+  // C/C++ 扩展资源限制配置（防止打开大项目卡死）
+  // =============================================
+
+  // 禁用 C/C++ 错误波浪线（Rust 项目不需要）
+  "C_Cpp.errorSquiggles": "Disabled",
+
+  // 限制 IntelliSense 缓存大小（默认 5120 MB）
+  "C_Cpp.intelliSenseCacheSize": 512,
+
+  // 限制 IntelliSense 缓存路径（避免塞满系统盘）
+  "C_Cpp.intelliSenseCachePath": "${workspaceFolder}/.vscode/intellisense_cache",
+
+  // 限制最大并发解析线程数
+  "C_Cpp.intelliSenseMaxConcurrentProcesses": 2,
+
+  // 内存限制（MB），超出后自动关闭 IntelliSense
+  "C_Cpp.intelliSenseMemoryLimit": 2048,
+
+  // 自动更新 IntelliSense 数据库（关闭后手动触发）
+  "C_Cpp.intelliSenseUpdateDelay": 2000,
+
+  // 禁用 C/C++ 自动补全（避免和 Rust Analyzer 冲突）
+  "C_Cpp.autocomplete": "disabled",
+
+  // 禁用 C/C++ 悬停提示
+  "C_Cpp.hover": "disabled",
+
+  // 禁用 C/C++ 代码格式化（使用 Rust 的格式化工具）
+  "C_Cpp.formatting": "disabled",
+
+  // 禁用 C/C++ 诊断（节省 CPU）
+  "C_Cpp.diagnostics": "Disabled",
+
+  // 只索引当前打开的文件，不扫描整个工作区
+  "C_Cpp.intelliSenseEngine": "default",
+  "C_Cpp.intelliSenseEngineFallback": "Disabled",
+
+  // 排除大型第三方目录（避免索引 v8/chromium 源码时爆炸）
+  "C_Cpp.files.exclude": {
+    "**/third_party/**": true,
+    "**/chromium/**": true,
+    "**/build/**": true,
+    "**/out/**": true,
+    "**/target/**": true,
+    "**/.git/**": true
+  },
+
+  // =============================================
+  // Rust 项目专用配置
+  // =============================================
+
+  // 启用 Rust Analyzer（Rust 的核心语言支持）
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.cargo.features": "all",
+
+  // 文件保存时自动格式化
+  "editor.formatOnSave": true,
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  }
+}

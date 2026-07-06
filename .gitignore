@@ -1,2 +1,29 @@
 target/
 .DS_Store
+.cargo-home/
+*.log
+.cargo/config.toml.build
+.cargo/config.toml.vendor
+.vscode/intellisense_cache
+.ccache
+__pycache__/
+*.pyc
+*.pyo
+.claude/settings.local.json
+dist/
+
+# Playwright extracted sources (re-extracted from tarball)
+_deps/playwright/extracted/
+_deps/playwright/playwright-core
+
+# TypeScript SDK build artifacts and dependencies
+sdk/*/node_modules/
+sdk/*/dist/
+sdk/*/bin/
+sdk/*/*.tsbuildinfo
+sdk/*/*.tar.gz
+sdk/*/*.tgz
+sdk/*.tgz
+sdk/*.tar.gz
+sdk/*/examples-dist/
+

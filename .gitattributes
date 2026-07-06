@@ -1,2 +1,5 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# *: A wildcard pattern that matches all files in the repository.
+# -text: Explicitly unsets the text attribute for matched files. It instructs Git not to treat these files as text, thereby disabling all automatic line-ending conversions (no normalization to LF on commit, and no conversion on checkout). Git will handle these files as opaque binary blobs, preserving their original line endings exactly as they are.
+# "git config core.autocrlf false" Local: No conversion, in conjunction with. gitattributes
+* -text
+

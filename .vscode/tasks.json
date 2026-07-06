@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "prepare-car-debug",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/prepare_debug.sh",
+      "args": [
+        "--target-dir",
+        "${input:targetDir}",
+        "--push-mode",
+        "${input:pushMode}",
+        "--",
+        "${input:carDevice}",
+        "${input:obscuraArgs}"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "cleanup-car-debug",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -e; ADB='/mnt/d/.sdk/tools/adb/linux/adb'; DEVICE='${input:carDevice}'; echo ''; echo '========================================'; echo '  清理车机调试进程'; echo '========================================'; \"$ADB\" -host -s \"$DEVICE\" shell 'pkill -f gdbserver 2>/dev/null || true; pkill -f obscura 2>/dev/null || true'; echo '  -> 清理完成 ✅'; echo ''"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "targetDir",
+      "type": "pickString",
+      "description": "目标编译目录",
+      "options": ["target/aarch64", "target/dbg", "target/bmain02"],
+      "default": "target/aarch64"
+    },
+    {
+      "id": "pushMode",
+      "type": "pickString",
+      "description": "是否推送二进制到车机",
+      "options": ["push", "no-push"],
+      "default": "push"
+    },
+    {
+      "id": "carDevice",
+      "type": "promptString",
+      "description": "车机设备地址 (如: 30.207.82.136:61339)",
+      "default": "30.207.82.136:61339"
+    },
+    {
+      "id": "obscuraArgs",
+      "type": "promptString",
+      "description": "obscura 运行参数",
+      "default": "fetch https://www.baidu.com --dump text"
+    }
+  ]
+}

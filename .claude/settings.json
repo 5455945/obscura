@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash"
+    ],
+    "deny": [
+      "Bash(*rm -rf /)",
+      "Bash(*rm -rf /*)",
+      "Bash(*rm -rf .git)",
+      "Bash(*rm -rf */.git)"
+    ]
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
+  }
+}

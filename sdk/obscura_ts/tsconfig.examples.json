@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "outDir": "./examples-dist",
+    "rootDir": "./examples",
+    "paths": {
+      "obscura-ts": ["./dist"]
+    },
+    "baseUrl": "."
+  },
+  "include": ["examples/**/*"],
+  "exclude": ["node_modules"]
+}
